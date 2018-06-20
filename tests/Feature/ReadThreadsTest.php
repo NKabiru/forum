@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ReadThreadsTest extends TestCase
 {
+
     use RefreshDatabase;
 
     public function setUp()
@@ -16,6 +17,8 @@ class ReadThreadsTest extends TestCase
         parent::setUp();
 
         $this->thread = factory(Thread::class)->create();
+
+        $this->signIn();
     }
 
     /**
@@ -23,6 +26,7 @@ class ReadThreadsTest extends TestCase
      */
     public function a_user_can_browse_threads()
     {
+
         $response = $this->get('/threads')
             ->assertSee($this->thread->title);
     }
