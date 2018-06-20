@@ -18,7 +18,6 @@ class ReadThreadsTest extends TestCase
 
         $this->thread = factory(Thread::class)->create();
 
-        $this->signIn();
     }
 
     /**
