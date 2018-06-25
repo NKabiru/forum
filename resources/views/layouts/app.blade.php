@@ -42,7 +42,7 @@
                                 Channels
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @forelse(\App\Channel::all() as $channel)
+                                @forelse($channels as $channel)
                                     <a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a>
                                 @empty
                                     <a class="dropdown-item text-muted" href="#">No channels</a>
