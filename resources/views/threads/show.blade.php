@@ -12,11 +12,13 @@
                                 {{ $thread->title }}
                             </span>
 
-                            <form action="{{ $thread->path() }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-link">Delete Thread</button>
-                            </form>
+                            @can('update', $thread)
+                                <form action="{{ $thread->path() }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-link">Delete Thread</button>
+                                </form>
+                            @endcan
                         </div>
                     </div>
 
