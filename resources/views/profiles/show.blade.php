@@ -17,7 +17,7 @@
                     <hr>
 
                     @foreach($activity as $record)
-                        @include("profiles.activities.{$record->type}", ['activity' => $record])
+                        @includeIf("profiles.activities.{$record->type}", ['activity' => $record])
                     @endforeach
                 @empty
                     <div class="card">
