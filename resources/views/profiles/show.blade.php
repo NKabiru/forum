@@ -7,36 +7,23 @@
                 <div>
                     <h1>
                         {{ $profileUser->name }}
-                        <small class="text-muted">Since {{ $profileUser->created_at->diffForHumans() }}</small>
                     </h1>
                 </div>
 
                 <hr>
 
-                @forelse($threads as $thread)
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="level">
-                        <span class="flex">
-                            <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a> posted:
-                            <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
-                        </span>
-                                {{ $thread->created_at->diffForHumans() }}
-                            </div>
-                        </div>
+                @forelse($activities as $date => $activity)
+                    <h3>{{ $date }}</h3>
+                    <hr>
 
-                        <div class="card-body">
-                            {{ $thread->body }}
-                        </div>
-                    </div>
-                    <br>
+                    @foreach($activity as $record)
+                        @include("profiles.activities.{$record->type}", ['activity' => $record])
+                    @endforeach
                 @empty
                     <div class="card">
-                        <div class="card-header">This user has no threads</div>
+                        <div class="card-header">This user has no activity</div>
                     </div>
                 @endforelse
-
-                {{ $threads->links() }}
 
             </div>
         </div>
