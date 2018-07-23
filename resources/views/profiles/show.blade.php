@@ -20,9 +20,7 @@
                         @includeIf("profiles.activities.{$record->type}", ['activity' => $record])
                     @endforeach
                 @empty
-                    <div class="card">
-                        <div class="card-header">This user has no activity</div>
-                    </div>
+                    <p>This user has no activity</p>
                 @endforelse
 
             </div>
