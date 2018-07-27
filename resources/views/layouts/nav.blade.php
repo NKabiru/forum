@@ -22,6 +22,7 @@
                         @endif
 
                         <a class="nav-link" href="/threads?popular=1">Popular Threads</a>
+                        <a class="nav-link" href="/threads?unanswered=1">Unanswered Threads</a>
                     </div>
 
                 <li><a class="nav-link" href="/threads/create">New Thread</a></li>
