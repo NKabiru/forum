@@ -26,6 +26,8 @@ Route::get('threads/{channel}/{thread}', 'ThreadController@show');
 Route::delete('threads/{channel}/{thread}', 'ThreadController@destroy');
 Route::post('threads', 'ThreadController@store');
 
+Route::post('threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store');
+
 Route::post('replies/{reply}/favorites', 'FavoriteController@store');
 Route::delete('replies/{reply}/favorites', 'FavoriteController@destroy');
 
