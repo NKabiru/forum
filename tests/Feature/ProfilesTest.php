@@ -23,7 +23,7 @@ class ProfilesTest extends TestCase
         $user = create('App\User');
 
         $this->get("/profiles/{$user->name}")
-            ->assertSee($user->name);
+            ->assertSee(e($user->name));
     }
 
     /** @test */
