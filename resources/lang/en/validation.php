@@ -89,7 +89,6 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
-    'spamfree'             => 'The :attribute contains spam',
 
     /*
     |--------------------------------------------------------------------------
