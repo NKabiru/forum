@@ -6,6 +6,7 @@ use App\Reply;
 use App\Rules\SpamFree;
 use App\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReplyController extends Controller
 {
@@ -22,7 +23,13 @@ class ReplyController extends Controller
     public function store($channelId, Thread $thread)
     {
         try {
-            $this->validate(request(), ['body' => 'required', new SpamFree]);
+           if (Gate::denies('create', new Reply)) {
+               return response(
+                   'You are posting too frequently. Please take a break :)', 429
+               );
+           }
+
+            $this->validate(request(), ['body' => 'required| spamfree']);
 
             $reply = $thread->addReply([
                 'body' => request('body'),
@@ -47,7 +54,7 @@ class ReplyController extends Controller
         $this->authorize('update', $reply);
 
         try {
-            $this->validate(request(), ['body' => 'required', new SpamFree]);
+            $this->validate(request(), ['body' => 'required|spamfree']);
 
             $reply->update(request(['body']));
         } catch (\Exception $e) {
