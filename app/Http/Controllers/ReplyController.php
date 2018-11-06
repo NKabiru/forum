@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use App\Reply;
-use App\Rules\SpamFree;
 use App\Thread;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ReplyController extends Controller
 {
@@ -20,33 +19,12 @@ class ReplyController extends Controller
         return $thread->replies()->paginate(10);
     }
 
-    public function store($channelId, Thread $thread)
+    public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
-        try {
-           if (Gate::denies('create', new Reply)) {
-               return response(
-                   'You are posting too frequently. Please take a break :)', 429
-               );
-           }
-
-            $this->validate(request(), ['body' => 'required| spamfree']);
-
-            $reply = $thread->addReply([
-                'body' => request('body'),
-                'user_id' => auth()->id()
-            ]);
-        } catch (\Exception $e) {
-            return response(
-                'Sorry your reply could not be left at this time', 422
-            );
-        }
-
-
-        if (request()->expectsJson()){
-            return $reply->load('owner');
-        }
-
-        return back()->with('flash', 'Your reply has been left');
+        return $thread->addReply([
+            'body' => request('body'),
+            'user_id' => auth()->id()
+        ])->load('owner');
     }
 
     public function update(Reply $reply)
