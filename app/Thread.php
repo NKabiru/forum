@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -45,17 +46,9 @@ class Thread extends Model
     {
         $newReply = $this->replies()->create($reply);
 
-        $this->notifySubscribers($newReply);
+        event(new ThreadReceivedNewReply($newReply));
 
         return $newReply;
-    }
-
-    public function notifySubscribers($reply)
-    {
-        $this->subscriptions
-            ->where('user_id', '!=', $reply->user_id)
-            ->each
-            ->notify($reply);
     }
 
     public function channel()

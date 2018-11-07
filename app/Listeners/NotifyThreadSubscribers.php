@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\ThreadHasNewReply;
+use App\Events\ThreadReceivedNewReply;
 
 class NotifyThreadSubscribers
 {
@@ -13,9 +13,11 @@ class NotifyThreadSubscribers
      * @param  ThreadHasNewReply  $event
      * @return void
      */
-    public function handle(ThreadHasNewReply $event)
+    public function handle(ThreadReceivedNewReply $event)
     {
-        $event->thread->subscriptions
+        $thread = $event->reply->thread;
+
+        $thread->subscriptions
             ->where('user_id', '!=', $event->reply->user_id)
             ->each
             ->notify($event->reply);
