@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
             <div v-if="editing">
-                <form @submit="update">
+                <form @submit.prevent="update">
                     <div class="form-group">
                         <textarea class="form-control" v-model="body" required></textarea>
                     </div>
