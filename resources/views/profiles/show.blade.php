@@ -17,7 +17,7 @@
                         </form>
                     @endcan
 
-                    <img src="{{ asset('storage/' . $profileUser->avatar_path) }}" width="50" height="50">
+                    <img src="{{ $profileUser->avatar() }}" width="50" height="50">
                 </div>
 
                 <hr>
