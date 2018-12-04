@@ -34,7 +34,7 @@
 
         <!--@can('update', $reply)-->
         <div class="card-footer level">
-            <div v-if="canUpdate">
+            <div v-if="authorize('updateReply', reply)">
                 <button class="btn btn-sm mr-1" @click="editing = true">Edit</button>
                 <button class="btn btn-danger btn-sm" @click="destroy">Delete</button>
             </div>
@@ -59,6 +59,7 @@
                 body: this.data.body,
                 id: this.data.id,
                 isBest: false,
+                reply: this.data,
             };
         },
 
@@ -66,14 +67,6 @@
             ago(){
                 return moment(this.data.created_at).fromNow();
             },
-
-            signedIn() {
-                return window.App.signedIn;
-            },
-
-            canUpdate(){
-                return this.authorize(user => this.data.user_id == user.id);
-            }
         },
 
         methods: {
