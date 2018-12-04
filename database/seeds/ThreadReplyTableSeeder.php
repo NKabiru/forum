@@ -12,10 +12,10 @@ class ThreadReplyTableSeeder extends Seeder
     public function run()
     {
         //
-        $threads = factory(App\Thread::class, 50)->create();
+        $threads = factory(App\Thread::class, 30)->create();
 
         $threads->each(function ($thread) {
-            factory(App\Reply::class, 5)->create(['thread_id' => $thread->id]);
+            factory(App\Reply::class, 2)->create(['thread_id' => $thread->id]);
         });
     }
 }
