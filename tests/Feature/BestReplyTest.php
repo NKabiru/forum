@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
+use Tests\TestCase;
 
 class BestReplyTest extends TestCase
 {
@@ -40,6 +40,22 @@ class BestReplyTest extends TestCase
         $this->postJson(route('best-replies.store', [$replies[1]->id]))->assertStatus(403);
 
         $this->assertFalse($replies[1]->fresh()->isBest());
+    }
+
+    /** @test */
+    public function if_a_best_reply_is_deleted_the_thread_is_updated_accordingly()
+    {
+        Schema::enableForeignKeyConstraints();
+
+        $this->signIn();
+
+        $reply = create('App\Reply', ['user_id' => auth()->id()]);
+
+        $reply->thread->markBestReply($reply);
+
+        $this->deleteJson(route('replies.destroy', $reply));
+
+        $this->assertNull($reply->thread->fresh()->best_reply_id);
     }
 
 
