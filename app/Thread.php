@@ -56,6 +56,11 @@ class Thread extends Model
         return $newReply;
     }
 
+    public function lock()
+    {
+        $this->update(['locked' => true]);
+    }
+
     public function channel()
     {
         return $this->belongsTo(Channel::class);
