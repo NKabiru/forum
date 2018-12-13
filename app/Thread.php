@@ -16,6 +16,10 @@ class Thread extends Model
 
     protected $with = ['creator', 'channel'];
 
+    protected $casts = [
+        'locked' => 'boolean'
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -54,11 +58,6 @@ class Thread extends Model
         event(new ThreadReceivedNewReply($newReply));
 
         return $newReply;
-    }
-
-    public function lock()
-    {
-        $this->update(['locked' => true]);
     }
 
     public function channel()
