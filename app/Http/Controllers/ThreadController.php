@@ -112,13 +112,13 @@ class ThreadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Thread  $thread
-     * @return \Illuminate\Http\Response
+     * @param $channel
+     * @param  \App\Thread $thread
+     * @return void
      */
-    public function update(Request $request, Thread $thread)
+    public function update($channel, Thread $thread)
     {
-        //
+
     }
 
     /**

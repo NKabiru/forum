@@ -23,8 +23,11 @@ Route::get('threads', 'ThreadController@index')->name('threads');
 Route::get('threads/create', 'ThreadController@create');
 Route::get('threads/{channel}', 'ThreadController@index');
 Route::get('threads/{channel}/{thread}', 'ThreadController@show');
+Route::patch('threads/{channel}/{thread}', 'ThreadController@update')->name('threads.update');
 Route::delete('threads/{channel}/{thread}', 'ThreadController@destroy');
 Route::post('threads', 'ThreadController@store')->middleware('must-be-confirmed');
+
+Route::post('locked-threads/{thread}', 'LockedThreadController@store')->name('locked-threads.store');
 
 Route::post('threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store');
 Route::delete('threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@destroy');
