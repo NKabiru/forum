@@ -65201,29 +65201,22 @@ var render = function() {
                 }
               },
               [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("wysiwyg", {
+                      model: {
                         value: _vm.body,
+                        callback: function($$v) {
+                          _vm.body = $$v
+                        },
                         expression: "body"
                       }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { required: "" },
-                    domProps: { value: _vm.body },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.body = $event.target.value
-                      }
-                    }
-                  })
-                ]),
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c("button", { staticClass: "btn btn-sm btn-primary" }, [
                   _vm._v("Update")
@@ -65372,13 +65365,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -65386,7 +65372,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            body: ''
+            body: '',
+            completed: false
         };
     },
     mounted: function mounted() {
@@ -65414,6 +65401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var data = _ref.data;
 
                 _this.body = '';
+                _this.completed = true;
 
                 flash('Your reply has been created');
 
@@ -67099,35 +67087,27 @@ var render = function() {
   return _c("div", [
     _vm.signedIn
       ? _c("div", [
-          _c("div", { staticClass: "form-group" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("wysiwyg", {
+                attrs: {
+                  name: "body",
+                  placeholder: "Have something to say?",
+                  shouldClear: _vm.completed
+                },
+                model: {
                   value: _vm.body,
+                  callback: function($$v) {
+                    _vm.body = $$v
+                  },
                   expression: "body"
                 }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                name: "body",
-                id: "body",
-                rows: "5",
-                required: "",
-                placeholder: "Have something to say?"
-              },
-              domProps: { value: _vm.body },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.body = $event.target.value
-                }
-              }
-            })
-          ]),
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "button",
@@ -68154,7 +68134,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -68178,13 +68158,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['name', 'value'],
+    props: ['name', 'value', 'placeholder', 'shouldClear'],
 
     mounted: function mounted() {
         var _this = this;
 
         this.$refs.trix.addEventListener('trix-change', function (event) {
             _this.$emit('input', event.target.innerHTML);
+        });
+
+        this.$watch('shouldClear', function () {
+            _this.$refs.trix.value = '';
         });
     }
 });
@@ -68205,7 +68189,10 @@ var render = function() {
         domProps: { value: _vm.value }
       }),
       _vm._v(" "),
-      _c("trix-editor", { ref: "trix", attrs: { input: "trix" } })
+      _c("trix-editor", {
+        ref: "trix",
+        attrs: { input: "trix", placeholder: _vm.placeholder }
+      })
     ],
     1
   )
