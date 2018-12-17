@@ -116,11 +116,19 @@ class ThreadController extends Controller
      *
      * @param $channel
      * @param  \App\Thread $thread
-     * @return void
+     * @return Thread
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update($channel, Thread $thread)
     {
+        $this->authorize('update', $thread);
 
+        $thread->update(request()->validate( [
+            'title' => 'required',
+            'body' => 'required',
+        ]));
+
+        return $thread;
     }
 
     /**
