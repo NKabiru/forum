@@ -7,7 +7,6 @@ use App\Filters\ThreadFilters;
 use App\Rules\Recaptcha;
 use App\Thread;
 use App\Trending;
-use Illuminate\Http\Request;
 
 class ThreadController extends Controller
 {
@@ -52,12 +51,12 @@ class ThreadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Recaptcha $recaptcha
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Recaptcha $recaptcha)
+    public function store( Recaptcha $recaptcha)
     {
-        $this->validate($request, [
+        request()->validate([
             'title' => 'required|spamfree',
             'body' => 'required|spamfree',
             'channel_id' => 'required|exists:channels,id',
